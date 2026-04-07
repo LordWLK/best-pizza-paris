@@ -30,11 +30,14 @@
   <!-- Favicon -->
   <link rel="icon" href="logo.png" type="image/png">
   <link rel="apple-touch-icon" href="logo.png">
+  <!-- Fonts: preconnect + preload for speed -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Leaflet: defer load (not needed above the fold) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous" media="print" onload="this.media='all'">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous" defer></script>
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -724,6 +727,120 @@
     .card.reveal:nth-child(3) { transition-delay: 0.12s; }
     .card.reveal:nth-child(4) { transition-delay: 0.16s; }
     .card.reveal:nth-child(5) { transition-delay: 0.2s; }
+
+    /* ===== ACCESSIBILITY ===== */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--green);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 0 0 12px 12px;
+      font-size: 14px;
+      font-weight: 600;
+      z-index: 99999;
+      transition: top 0.3s ease;
+    }
+
+    .skip-link:focus {
+      top: 0;
+    }
+
+    *:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* ===== MOBILE MENU ===== */
+    .nav__mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 9998;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+    }
+
+    .nav__mobile-menu.is-open { display: flex; }
+
+    .nav__mobile-menu a {
+      font-size: 24px;
+      font-weight: 600;
+      color: #fff;
+      transition: color 0.2s;
+    }
+
+    .nav__mobile-menu a:hover { color: var(--red); }
+
+    .nav__menu-btn.is-open span:first-child {
+      transform: translateX(-50%) rotate(45deg);
+      top: 10px;
+    }
+
+    .nav__menu-btn.is-open span:last-child {
+      transform: translateX(-50%) rotate(-45deg);
+      top: 10px;
+    }
+
+    /* ===== BACK TO TOP ===== */
+    .back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 44px;
+      height: 44px;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease;
+      box-shadow: var(--shadow-md);
+      z-index: 999;
+    }
+
+    .back-to-top.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: var(--red);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .back-to-top { bottom: 20px; right: 20px; width: 40px; height: 40px; font-size: 18px; }
+    }
+
+    /* ===== REDUCED MOTION ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+      .hero .fade-in { opacity: 1; transform: none; animation: none; }
+    }
   </style>
 
   <!-- Schema.org : WebSite -->
@@ -854,9 +971,12 @@
 </head>
 <body>
 
+  <!-- Skip to content (a11y) -->
+  <a href="#restaurants" class="skip-link">Aller au contenu</a>
+
   <!-- Nav -->
   <header>
-  <nav class="nav" aria-label="Navigation principale">
+  <nav class="nav" role="navigation" aria-label="Navigation principale">
     <div class="nav__inner">
       <a href="#" class="nav__logo">
         <img class="nav__logo-img" src="logo.png" alt="Best Pizza Paris">
@@ -879,6 +999,13 @@
       </div>
     </div>
   </nav>
+  <!-- Mobile menu -->
+  <div class="nav__mobile-menu" id="mobile-menu" aria-hidden="true">
+    <a href="#restaurants" onclick="closeMenu()">Restaurants</a>
+    <a href="#map-section" onclick="closeMenu()">Carte</a>
+    <a href="#about" onclick="closeMenu()">About</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+  </div>
   </header>
 
   <main>
@@ -914,7 +1041,7 @@
     <div class="restaurant-list">
 
       <!-- 1. Peppe -->
-      <article class="card reveal">
+      <article class="card reveal" id="resto-1">
         <div class="card__img-wrap">
           <span class="card__rank">1</span>
           <img class="card__img" src="https://static.actu.fr/uploads/2022/09/288651900-599443604934325-1453488986606021507-n.jpg" alt="Pizza Peppe" loading="lazy">
@@ -930,7 +1057,7 @@
       </article>
 
       <!-- 2. Mangioni -->
-      <article class="card card--reverse reveal">
+      <article class="card card--reverse reveal" id="resto-2">
         <div class="card__img-wrap">
           <span class="card__rank">2</span>
           <img class="card__img" src="https://assets.ohmyresto.fr/cdn-cgi/image/width=1080,format=auto/https://assets.ohmyresto.fr/uploads/restaurant_cm6jerybb00byobge1wo310ml/OMR_GALLERY_SQUARE/792a2351-2412-4ea5-85b0-1803eb37808c" alt="Pizza Mangioni" loading="lazy">
@@ -946,7 +1073,7 @@
       </article>
 
       <!-- 3. Oobatz -->
-      <article class="card reveal">
+      <article class="card reveal" id="resto-3">
         <div class="card__img-wrap">
           <span class="card__rank">3</span>
           <img class="card__img" src="https://www.2foodtrippers.com/wp-content/uploads/2024/10/Courgette-Pizza-Slice-at-Oobatz-Pizza-in-Paris.jpg" alt="Pizza Oobatz" loading="lazy">
@@ -962,7 +1089,7 @@
       </article>
 
       <!-- 4. Dalmata -->
-      <article class="card card--reverse reveal">
+      <article class="card card--reverse reveal" id="resto-4">
         <div class="card__img-wrap">
           <span class="card__rank">4</span>
           <img class="card__img" src="https://www.urbansider.com/wp-content/uploads/2020/05/dalmata-pizza.jpg" alt="Pizza Dalmata" loading="lazy">
@@ -978,7 +1105,7 @@
       </article>
 
       <!-- 5. Guillaume Grasso -->
-      <article class="card reveal">
+      <article class="card reveal" id="resto-5">
         <div class="card__img-wrap">
           <span class="card__rank">5</span>
           <img class="card__img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgldZlMxCneJ_c28HNqTwhortlOgKepBbInN6k1yF4pCCrtp8AHjUvQbJrBglqzXYckdkNauFd76L8TsLildI1tQ4ZSPHw1ueo_kitAB3Yyd8ACMysuaTuH0QRi5-BmTIAp-jBv3ybjdElh_ZlEmVWsoYWMf4F77k_bUnGdguz_J8rTUGfRST9QOQ7D/s4032/20220228_133538.jpg" alt="Pizza Guillaume Grasso" loading="lazy">
@@ -1023,6 +1150,9 @@
   </section>
 
   </main>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Retour en haut de page" title="Retour en haut">&#8593;</button>
 
   <!-- Footer -->
   <footer id="contact" class="footer">
@@ -1087,9 +1217,10 @@
         });
 
         restaurants.forEach((r, i) => {
+          const popup = `<div class="map-popup__name"><a href="#resto-${i+1}" style="color:var(--green);text-decoration:none">${i + 1}. ${r.name}</a></div><div class="map-popup__addr">📍 ${r.addr}</div><div class="map-popup__rating">★ ${r.rating}</div>`;
           L.marker([r.lat, r.lng], { icon: pizzaIcon })
             .addTo(map)
-            .bindPopup(`<div class="map-popup__name">${i + 1}. ${r.name}</div><div class="map-popup__addr">📍 ${r.addr}</div><div class="map-popup__rating">★ ${r.rating}</div>`);
+            .bindPopup(popup);
         });
       }
     }, { threshold: 0.1 });
@@ -1107,6 +1238,38 @@
       { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
     );
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Mobile menu
+    const menuBtn = document.querySelector('.nav__menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('is-open');
+      menuBtn.classList.toggle('is-open');
+      mobileMenu.setAttribute('aria-hidden', !isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    function closeMenu() {
+      mobileMenu.classList.remove('is-open');
+      menuBtn.classList.remove('is-open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    // Back to top
+    const backBtn = document.getElementById('back-to-top');
+    const backObserver = new IntersectionObserver(
+      ([entry]) => {
+        backBtn.classList.toggle('is-visible', !entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    backObserver.observe(hero);
+
+    backBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   </script>
 
 </body>
