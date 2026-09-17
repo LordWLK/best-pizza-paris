@@ -1,51 +1,97 @@
-# === Security Headers ===
+# ============================================================
+#  Best Pizza Paris — configuration serveur (Apache / LiteSpeed, Hostinger)
+#  Toute modification : vérifier ensuite avec
+#    curl -sI https://bestpizzaparis.com/ | grep -i content-security-policy
+# ============================================================
 
-# Prevent clickjacking
-Header always set X-Frame-Options "SAMEORIGIN"
+AddDefaultCharset UTF-8
+ErrorDocument 404 /404.html
 
-# Prevent MIME type sniffing
-Header always set X-Content-Type-Options "nosniff"
+# Pas de listing de répertoire. Les deux directives dépendent d'AllowOverride
+# (Hostinger : AllowOverride All). Seul "Options -Indexes" désactive l'auto-index ;
+# IndexIgnore ne fait que masquer les entrées. Si l'hébergeur change et renvoie
+# une erreur 500, retirer la ligne Options.
+<IfModule mod_autoindex.c>
+  Options -Indexes
+  IndexIgnore *
+</IfModule>
 
-# XSS Protection
-Header always set X-XSS-Protection "1; mode=block"
+# --- Types MIME et encodage -------------------------------------------------
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType image/avif .avif
+  AddType font/woff2 .woff2
+  AddType image/x-icon .ico
+  AddType application/manifest+json .webmanifest
+  AddCharset UTF-8 .html .css .js .txt .xml .webmanifest .json
+</IfModule>
 
-# Referrer Policy
-Header always set Referrer-Policy "strict-origin-when-cross-origin"
+# --- Fichiers cachés et de travail : jamais servis ---------------------------
+<IfModule mod_alias.c>
+  # .git/, .claude/, .htaccess, .env… (sauf /.well-known/ pour security.txt)
+  RedirectMatch 404 "(^|/)\.(?!well-known/)"
+  # sauvegardes, journaux, documentation interne
+  RedirectMatch 404 "\.(bak|old|orig|sql|log|swp|md)$|~$"
+</IfModule>
 
-# Permissions Policy (disable unused browser features)
-Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+# --- En-têtes de sécurité ----------------------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-XSS-Protection "0"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "same-site"
+  # HSTS sans includeSubDomains ni preload : autodiscover.* (mail) n'est pas en HTTPS
+  Header always set Strict-Transport-Security "max-age=31536000"
 
-# Content Security Policy
-Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.basemaps.cartocdn.com https://*.tile.openstreetmap.org; frame-ancestors 'none'"
+  # Content Security Policy — pas de 'unsafe-inline' : CSS et JS sont dans des fichiers
+  # externes (styles.css, main.js). Le seul script inline est le basculeur no-js/js du <head>,
+  # autorisé par son hash. Leaflet est chargé à la demande depuis unpkg (chemins exacts).
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-OuZY6WzJOIh2C89ThsUSxQtxIJomDP4jHuL8NXL3o5c=' https://unpkg.com/leaflet@1.9.4/dist/leaflet.js; style-src 'self' https://fonts.googleapis.com https://unpkg.com/leaflet@1.9.4/dist/leaflet.css; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://basemaps.cartocdn.com https://*.basemaps.cartocdn.com https://images.unsplash.com https://static.actu.fr https://assets.ohmyresto.fr https://www.2foodtrippers.com https://www.urbansider.com https://blogger.googleusercontent.com; connect-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
 
-# Strict Transport Security (HTTPS only)
-Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  # --- Cache navigateur -----------------------------------------------------
+  # HTML : toujours revalidé (ETag/Last-Modified → 304), pour que les mises à jour soient immédiates
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  # CSS/JS versionnés par ?v= (changer la valeur à chaque modification) : cache long et immuable
+  <FilesMatch "\.(css|js|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Images référencées sans version : 30 jours, revalidables (un logo remplacé en place
+  # est visible au plus tard un mois après)
+  <FilesMatch "\.(png|jpe?g|webp|avif|gif|svg|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(txt|xml|webmanifest|json)$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+</IfModule>
 
-# === Performance ===
-
-# Enable compression
+# --- Compression -------------------------------------------------------------
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/xml text/javascript application/javascript application/json application/xml application/manifest+json image/svg+xml image/x-icon
+</IfModule>
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml text/javascript application/javascript application/json application/xml application/manifest+json image/svg+xml image/x-icon
 </IfModule>
 
-# Cache static assets
-<IfModule mod_expires.c>
-  ExpiresActive On
-  ExpiresByType text/html "access plus 1 hour"
-  ExpiresByType text/css "access plus 1 month"
-  ExpiresByType application/javascript "access plus 1 month"
-  ExpiresByType image/png "access plus 1 year"
-  ExpiresByType image/jpeg "access plus 1 year"
-  ExpiresByType image/svg+xml "access plus 1 month"
+# --- Redirections canoniques -------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # 1) Forcer HTTPS (compatible proxy/CDN via X-Forwarded-Proto), en une seule redirection
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://bestpizzaparis.com%{REQUEST_URI} [R=301,L]
+
+  # 2) www (ou tout autre hôte) -> apex
+  RewriteCond %{HTTP_HOST} !^bestpizzaparis\.com$ [NC]
+  RewriteRule ^ https://bestpizzaparis.com%{REQUEST_URI} [R=301,L]
+
+  # 3) /index.html -> /
+  RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+  RewriteRule ^index\.html$ / [R=301,L]
 </IfModule>
-
-# === Redirect ===
-
-# Force HTTPS
-RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-# Force www to non-www (or vice versa - adjust as needed)
-RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-RewriteRule ^(.*)$ https://%1/$1 [R=301,L]

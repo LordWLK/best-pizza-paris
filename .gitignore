@@ -1,0 +1,15 @@
+# Outils locaux (Claude Code, IDE)
+.claude/
+.vscode/
+.idea/
+
+# Système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Fichiers temporaires / sauvegardes
+*.log
+*.bak
+*.tmp
+*~
