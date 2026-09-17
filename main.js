@@ -114,6 +114,15 @@
     var loading = false;
     var failed = false;
 
+    // Texte d'un element sans ses parties reservees aux lecteurs d'ecran (.sr-only),
+    // pour que les marqueurs affichent "1. Peppe" et non "1. N° 1 : Peppe".
+    var visibleText = function (node) {
+      if (!node) return '';
+      var clone = node.cloneNode(true);
+      Array.prototype.forEach.call(clone.querySelectorAll('.sr-only'), function (n) { n.parentNode.removeChild(n); });
+      return clone.textContent.trim();
+    };
+
     var cards = d.querySelectorAll('.card[data-lat]');
     var restaurants = Array.prototype.map.call(cards, function (c) {
       var nameEl = c.querySelector('.card__name');
@@ -121,7 +130,7 @@
       var maps = c.querySelector('.card__link--maps');
       return {
         id: c.id,
-        name: nameEl ? nameEl.textContent.trim() : '',
+        name: visibleText(nameEl),
         addr: c.getAttribute('data-address') || '',
         rating: c.getAttribute('data-rating') || '',
         lat: parseFloat(c.getAttribute('data-lat')),

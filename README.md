@@ -22,14 +22,14 @@ Aucun framework, aucun build : HTML + CSS + JS servis tels quels.
 
 - Hébergeur : **Hostinger** (hPanel, serveur LiteSpeed, `.htaccess` pris en charge). DNS chez Hostinger.
 - Dépôt : `https://github.com/LordWLK/best-pizza-paris` (branche `main`).
-- Déploiement : copier à la racine du site (`public_html/`) **tous les fichiers du dépôt sauf** `.git/`, `.claude/`, `.gitignore`, `README.md`, `logo.png` (facultatif). Le déploiement Git de hPanel (Avancé → Git) évite les oublis.
+- Déploiement : **automatique**. Un `git push` sur `main` met le site en production en quelques secondes (déploiement Git de hPanel, vérifié le 17 septembre 2026). Tout ce qui est poussé sur `main` est donc public immédiatement : tester en local avant de pousser, ou travailler sur une autre branche. Les fichiers internes du dépôt (`README.md`, `.gitignore`, `.git/`) sont bloqués par le `.htaccess` ou par l'hébergeur.
 
 ### Contrôles après chaque mise en ligne
 
 ```bash
 curl -sI https://bestpizzaparis.com/ | grep -iE "^(HTTP|content-security-policy|strict-transport|cache-control)"
 curl -sI https://bestpizzaparis.com/xyz-inexistant | head -1        # attendu : 404 + en-têtes de sécurité
-curl -sIL http://www.bestpizzaparis.com/ | grep -c "^HTTP"           # attendu : 2 (une seule redirection)
+curl -sIL http://www.bestpizzaparis.com/ | grep -c "^HTTP"           # attendu : 3 (Hostinger force HTTPS avant le .htaccess, puis www -> apex) ; 2 pour http://bestpizzaparis.com/ et https://www…
 curl -sI https://bestpizzaparis.com/.claude/launch.json | head -1    # attendu : 404
 curl -sI https://bestpizzaparis.com/index.html | head -1             # attendu : 301 vers /
 ```
@@ -39,7 +39,7 @@ Puis ouvrir la page dans un navigateur et vérifier la console : aucune erreur �
 ## Règles à respecter en modifiant le site
 
 1. **Pas de `style="…"`, pas de `onclick="…"`, pas de `<script>` inline** : la CSP (`.htaccess`) les bloque. Écrire la CSS dans `styles.css` et le JS dans `main.js`. Seul le script `document.documentElement.classList.replace('no-js','js')` du `<head>` est autorisé, par hash : ne pas le modifier (sinon recalculer le hash : `printf "%s" "<contenu exact du script>" | openssl dgst -sha256 -binary | openssl base64 -A`).
-2. **Versionner les assets** après modification : changer `?v=20260904` dans les balises `<link>`/`<script>` des quatre pages (cache navigateur d'un an, immuable). Les images sont en cache 30 jours sans `immutable` : un logo ou une icône remplacés en place sont visibles au plus tard un mois après (ou immédiatement si on renomme le fichier).
+2. **Versionner les assets** après modification : changer `?v=20260917` dans les balises `<link>`/`<script>` des quatre pages (cache navigateur d'un an, immuable). Les images sont en cache 30 jours sans `immutable` : un logo ou une icône remplacés en place sont visibles au plus tard un mois après (ou immédiatement si on renomme le fichier).
 3. **Nouvelle origine tierce** (police, image, script) : l'ajouter dans la directive correspondante de la CSP, et dans le tableau de `confidentialite.html`.
 4. **Adresses des restaurants** : vérifier sur le site officiel de chaque établissement (elles changent). Coordonnées GPS : `https://nominatim.openstreetmap.org/search?format=json&q=<adresse>`.
 
