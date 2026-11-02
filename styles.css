@@ -448,6 +448,20 @@ address { font-style: normal; }
 }
 
 /* ===== ACCUEIL : compléments (v2026-11-02) ===== */
+/* Visuel neutre tant que la pizzeria n'a pas de photo prise par la rédaction
+   (les photos empruntées à des sites tiers ont été retirées le 2 novembre 2026). */
+.card__img-wrap--placeholder {
+  height: auto; min-height: 240px;
+  background: radial-gradient(circle at 30% 25%, #ffffff 0, var(--green-light) 55%, #d6e9dd 100%);
+}
+.card__placeholder {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 72px; line-height: 1; opacity: .55;
+}
+@media (max-width: 768px) {
+  .card__img-wrap--placeholder { height: 150px; min-height: 0; }
+  .card__placeholder { font-size: 56px; }
+}
 .hero__title-sub {
   display: block; font-size: .4em; font-weight: 600; font-style: normal;
   letter-spacing: -.01em; line-height: 1.25; margin-top: .5em; color: rgba(255,255,255,0.92);

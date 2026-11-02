@@ -120,7 +120,7 @@ EOF
 ## Pistes d'amélioration (par ordre de valeur)
 
 1. **Visites et fiches** : appeler puis visiter les cinq pizzerias, remplir `.data/restaurants.json`, publier une fiche par adresse avec photos propres, prix et horaires datés.
-2. **Photos** : remplacer les photos hotlinkées depuis des sites tiers (droit d'auteur, disponibilité, poids) par des photos prises sur place, en WebP avec `srcset`, puis retirer leurs origines de la CSP et du tableau RGPD.
+2. **Photos** : les photos empruntées à des sites tiers ont été retirées (2 novembre 2026) ; les cartes affichent un visuel neutre (`.card__img-wrap--placeholder`). Ajouter des photos prises sur place dans `/img/` (WebP 640/960/1280 px, `srcset`, `width`/`height`, `alt`), remettre une balise `<img class="card__img">` dans la carte et retirer la classe `--placeholder`. Aucune origine tierce à ajouter : les images locales sont couvertes par `img-src 'self'`.
 3. **Identité** : auteur nommé, page « À propos », méthode de classement, logo corrigé (le logo actuel contient une faute), e-mail de contact actif.
 4. **Mesure** : Search Console (propriété Domaine), Bing Webmaster Tools, statistiques hPanel ; outil d'audience tiers seulement après vérification de sa conformité CNIL.
 5. **Auto-héberger la police Inter et l'image d'en-tête** (accord du propriétaire requis) : supprime Google Fonts et Unsplash de la CSP et de la politique de confidentialité.
