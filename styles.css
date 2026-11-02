@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Best Pizza Paris — feuille de style (v2026-09-04)
+   Best Pizza Paris — feuille de style (v2026-11-02)
    Pas de style inline dans le HTML : la CSP (style-src 'self') les bloque.
    ========================================================================== */
 
@@ -356,11 +356,6 @@ address { font-style: normal; }
 .table-wrap { overflow-x: auto; margin: 12px 0 20px; }
 .page .table-wrap table { margin: 0; min-width: 640px; }
 .table-wrap:focus-visible { outline-offset: 4px; }
-.page .todo {
-  background: #fff4d6; border-left: 4px solid #e0a300; color: #5a4200;
-  padding: 12px 16px; border-radius: 8px; margin: 12px 0 20px;
-}
-.page .todo strong { color: #3d2c00; }
 .btn {
   display: inline-flex; align-items: center; gap: 8px; min-height: 48px;
   background: var(--green); color: #fff; font-size: 15px; font-weight: 600;
@@ -380,9 +375,12 @@ address { font-style: normal; }
 @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
 
 /* Apparition au défilement : uniquement quand JS est actif (classe .js sur <html>),
-   sinon le contenu reste visible. */
+   sinon le contenu reste visible. Si main.js ne pose pas .js-ready dans les 1,5 s
+   (fichier bloqué, erreur, CSP), le repli ci-dessous réaffiche tout. */
 .js .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
 .js .reveal.is-visible { opacity: 1; transform: translateY(0); }
+.js:not(.js-ready) .reveal { animation: reveal-fallback 0s 1.5s forwards; }
+@keyframes reveal-fallback { to { opacity: 1; transform: none; } }
 .reveal-group .reveal:nth-child(2) { transition-delay: 0.1s; }
 .reveal-group .reveal:nth-child(3) { transition-delay: 0.15s; }
 .restaurant-list > .reveal:nth-child(2) { transition-delay: 0.08s; }
@@ -448,3 +446,74 @@ address { font-style: normal; }
   .hero__title-accent { color: #000; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
 }
+
+/* ===== ACCUEIL : compléments (v2026-11-02) ===== */
+.hero__title-sub {
+  display: block; font-size: .4em; font-weight: 600; font-style: normal;
+  letter-spacing: -.01em; line-height: 1.25; margin-top: .5em; color: rgba(255,255,255,0.92);
+}
+.section-intro { max-width: 760px; margin: -28px auto 44px; }
+.section-intro p { font-size: 16px; color: var(--text-body); line-height: 1.7; }
+.card__awards { font-size: 14px; color: var(--text-body); line-height: 1.6; margin-bottom: 18px; }
+.card__awards strong { color: var(--text-dark); font-weight: 600; }
+.card__awards a { color: var(--green); text-decoration: underline; text-underline-offset: 2px; }
+.card__awards a:hover { color: var(--red); }
+
+.updates {
+  text-align: left; background: var(--bg-warm); border: 1px solid rgba(0,0,0,0.06);
+  border-radius: var(--radius); padding: 18px 22px; margin: 0 auto 24px;
+}
+.updates__title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--red); margin-bottom: 10px; }
+.updates__list { list-style: none; }
+.updates__list li { position: relative; padding-left: 14px; margin-bottom: 6px; font-size: 14px; color: var(--text-body); line-height: 1.6; }
+.updates__list li::before { content: ''; position: absolute; left: 0; top: .65em; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+.updates__list time { font-weight: 600; color: var(--text-dark); }
+
+.faq { padding: 80px 24px 100px; background: var(--bg); }
+.faq__inner { max-width: 760px; margin: 0 auto; }
+.faq__inner .section-header__label, .faq__inner .section-header__title { text-align: center; }
+.faq__inner .section-header__title { margin-bottom: 40px; }
+.faq__item {
+  background: var(--bg-white); border: 1px solid rgba(0,0,0,0.05); border-radius: var(--radius);
+  padding: 24px 28px; margin-bottom: 16px; box-shadow: var(--shadow-sm);
+}
+.faq__item h3 { font-size: 18px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 10px; color: var(--text-dark); }
+.faq__item p { font-size: 15px; color: var(--text-body); line-height: 1.7; }
+.faq__item a { color: var(--green); text-decoration: underline; text-underline-offset: 2px; }
+@media (max-width: 768px) {
+  .faq { padding: 56px 16px 72px; }
+  .faq__item { padding: 20px 18px; }
+  .section-intro { margin: -16px auto 32px; }
+}
+
+/* ===== PAGES SECONDAIRES : fil d'Ariane, fiches, sources (v2026-11-02) ===== */
+.breadcrumb { margin-bottom: 18px; }
+.breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; padding: 0; margin: 0; }
+.breadcrumb li { font-size: 14px; color: var(--text-muted); margin: 0; }
+.breadcrumb li + li::before { content: '\203A'; padding: 0 8px; color: var(--text-muted); }
+.breadcrumb a { color: var(--green); text-decoration: underline; text-underline-offset: 2px; }
+.breadcrumb [aria-current="page"] { color: var(--text-body); }
+.page h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -.01em; margin: 24px 0 8px; }
+.page .facts {
+  display: grid; grid-template-columns: 180px 1fr; gap: 10px 16px;
+  background: var(--bg-white); border: 1px solid rgba(0,0,0,0.06); border-radius: var(--radius);
+  padding: 20px 24px; margin: 16px 0 28px;
+}
+.page .facts dt { font-size: 14px; font-weight: 600; color: var(--text-dark); }
+.page .facts dd { font-size: 15px; color: var(--text-body); line-height: 1.5; margin: 0; }
+@media (max-width: 600px) {
+  .page .facts { grid-template-columns: 1fr; gap: 2px 0; }
+  .page .facts dd { margin-bottom: 10px; }
+}
+.fiche__figure { margin: 8px 0 28px; }
+.fiche__figure img { width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+.fiche__figure figcaption { font-size: 13px; color: var(--text-muted); margin-top: 8px; line-height: 1.5; }
+.verified {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600;
+  color: var(--green); background: var(--green-light); padding: 6px 12px; border-radius: 980px; margin: 4px 0 20px;
+}
+.page .note { font-size: 14px; color: var(--text-muted); border-left: 3px solid rgba(0,0,0,0.12); padding: 6px 14px; margin: 12px 0 20px; }
+.page .sources { padding-left: 22px; }
+.page .sources li { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 6px; }
+.page .toc { font-size: 14px; margin-bottom: 24px; }
+.page .toc li { margin-bottom: 4px; font-size: 14px; }

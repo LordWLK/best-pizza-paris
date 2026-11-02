@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!--
+  GABARIT « FICHE PIZZERIA » — ne pas servir tel quel (dossier .outils/ bloqué par le .htaccess).
+  Copier vers /pizzeria-<slug>.html à la racine, remplacer chaque {{…}}, puis :
+    1. vérifier que ?v= est identique à celui des autres pages ;
+    2. ne pas toucher au script no-js (hash CSP) ;
+    3. ajouter l'URL dans sitemap.xml (lastmod = date de publication) ;
+    4. activer le lien « Lire notre avis complet » dans la carte correspondante de index.html ;
+    5. lancer python .outils/verifier.py puis tester en local avec la CSP (python .outils/devserver.py 3210 .).
+  Les données pratiques viennent de .data/restaurants.json (adresse, horaires, prix, réservation),
+  renseignées après visite ou appel ; ne rien publier qui n'y soit daté et sourcé.
+-->
+<html lang="fr" dir="ltr" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{NOM}} (Paris {{ARRONDISSEMENT}})&#160;: notre avis, pizzas, prix et infos pratiques</title>
+  <meta name="description" content="{{DESCRIPTION 140-155 caractères : style de pizza, quartier, pizza à commander, prix, réservation}}">
+  <meta name="author" content="Best Pizza Paris">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#006341">
+  <link rel="canonical" href="https://bestpizzaparis.com/pizzeria-{{SLUG}}.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://bestpizzaparis.com/pizzeria-{{SLUG}}.html">
+  <meta property="og:title" content="{{NOM}} (Paris {{ARRONDISSEMENT}})&#160;: notre avis, pizzas, prix et infos pratiques">
+  <meta property="og:description" content="{{DESCRIPTION}}">
+  <meta property="og:image" content="https://bestpizzaparis.com/img/{{SLUG}}-og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ALT PHOTO}}">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Best Pizza Paris">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{NOM}}&#160;: notre avis et infos pratiques">
+  <meta name="twitter:description" content="{{DESCRIPTION}}">
+  <meta name="twitter:image" content="https://bestpizzaparis.com/img/{{SLUG}}-og.jpg">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=20261102">
+  <script>document.documentElement.classList.replace('no-js','js')</script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://bestpizzaparis.com/pizzeria-{{SLUG}}.html#webpage",
+        "url": "https://bestpizzaparis.com/pizzeria-{{SLUG}}.html",
+        "name": "{{NOM}} (Paris {{ARRONDISSEMENT}}) : notre avis, pizzas, prix et infos pratiques",
+        "isPartOf": { "@id": "https://bestpizzaparis.com/#website" },
+        "inLanguage": "fr",
+        "datePublished": "{{AAAA-MM-JJ}}",
+        "dateModified": "{{AAAA-MM-JJ}}",
+        "author": { "@id": "https://bestpizzaparis.com/#org" },
+        "primaryImageOfPage": { "@type": "ImageObject", "url": "https://bestpizzaparis.com/img/{{SLUG}}-960.webp", "width": 960, "height": 720 },
+        "breadcrumb": { "@id": "https://bestpizzaparis.com/pizzeria-{{SLUG}}.html#breadcrumb" },
+        "mainEntity": { "@id": "https://bestpizzaparis.com/#resto-{{RANG}}" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://bestpizzaparis.com/pizzeria-{{SLUG}}.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bestpizzaparis.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Classement", "item": "https://bestpizzaparis.com/#restaurants" },
+          { "@type": "ListItem", "position": 3, "name": "{{NOM}}" }
+        ]
+      },
+      {
+        "@type": "Restaurant",
+        "@id": "https://bestpizzaparis.com/#resto-{{RANG}}",
+        "name": "{{NOM}}",
+        "url": "https://bestpizzaparis.com/pizzeria-{{SLUG}}.html",
+        "sameAs": "{{SITE OFFICIEL}}",
+        "image": "https://bestpizzaparis.com/img/{{SLUG}}-960.webp",
+        "servesCuisine": ["Pizza napolitaine", "Italienne"],
+        "telephone": "{{+33 …}}",
+        "priceRange": "{{€€ — seulement après relevé de prix}}",
+        "acceptsReservations": "{{True|False}}",
+        "address": { "@type": "PostalAddress", "streetAddress": "{{RUE}}", "addressLocality": "Paris", "postalCode": "{{750XX}}", "addressCountry": "FR" },
+        "geo": { "@type": "GeoCoordinates", "latitude": {{LAT}}, "longitude": {{LNG}} },
+        "hasMap": "https://www.google.com/maps/dir/?api=1&destination={{LAT}},{{LNG}}",
+        "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday"], "opens": "12:00", "closes": "14:30" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Aller au contenu principal</a>
+
+  <header>
+    <nav class="nav nav--scrolled" aria-label="Navigation principale">
+      <div class="nav__inner">
+        <a href="/" class="nav__logo" aria-label="Best Pizza Paris — accueil">
+          <img class="nav__logo-img" src="/logo-120.png" srcset="/logo-120.png 1x, /logo-240.png 2x" width="48" height="52" alt="Best Pizza Paris">
+        </a>
+        <ul class="nav__links">
+          <li><a href="/" class="nav__link">Accueil</a></li>
+          <li><a href="/#restaurants" class="nav__link">Restaurants</a></li>
+          <li><a href="/#map-section" class="nav__link">Carte</a></li>
+          <li><a href="/palmares-pizzerias-paris.html" class="nav__link">Palmarès</a></li>
+          <li><a href="/#about" class="nav__link">À propos</a></li>
+        </ul>
+        <div class="nav__right">
+          <button class="nav__menu-btn" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <nav class="nav__mobile-menu" id="mobile-menu" aria-label="Menu mobile" hidden>
+      <ul>
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/#restaurants">Restaurants</a></li>
+        <li><a href="/#map-section">Carte</a></li>
+        <li><a href="/palmares-pizzerias-paris.html">Palmarès</a></li>
+        <li><a href="/#about">À propos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1" class="page">
+    <nav class="breadcrumb" aria-label="Fil d’Ariane">
+      <ol>
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/#restaurants">Classement</a></li>
+        <li aria-current="page">{{NOM}}</li>
+      </ol>
+    </nav>
+
+    <h1>{{NOM}}&#160;: notre avis sur la pizzeria du {{ARRONDISSEMENT}}</h1>
+    <p class="page__lead">{{CHAPÔ 2-3 phrases : style, ce qui la distingue, pour qui.}}</p>
+    <p class="verified"><span aria-hidden="true">✓</span> Visité le <time datetime="{{AAAA-MM-JJ}}">{{JJ mois AAAA}}</time>, informations vérifiées le <time datetime="{{AAAA-MM-JJ}}">{{JJ mois AAAA}}</time></p>
+
+    <figure class="fiche__figure">
+      <img src="/img/{{SLUG}}-960.webp" srcset="/img/{{SLUG}}-640.webp 640w, /img/{{SLUG}}-960.webp 960w, /img/{{SLUG}}-1280.webp 1280w" sizes="(max-width: 800px) 100vw, 760px" width="960" height="720" alt="{{ALT PHOTO descriptif}}" loading="eager" decoding="async">
+      <figcaption>{{Légende : pizza, date, photo Best Pizza Paris}}</figcaption>
+    </figure>
+
+    <h2 id="essentiel">L’essentiel</h2>
+    <dl class="facts">
+      <dt>Adresse</dt><dd>{{RUE}}, {{750XX}} Paris</dd>
+      <dt>Métro</dt><dd>{{STATION (ligne N)}}, {{N}} min à pied</dd>
+      <dt>Style</dt><dd>{{Napolitaine classique / contemporaine / pâte fine au levain…}}</dd>
+      <dt>Prix</dt><dd>Margherita {{N}}&#160;€, pizzas de {{N}} à {{N}}&#160;€ (relevé du {{date}})</dd>
+      <dt>Réservation</dt><dd>{{Oui, en ligne sur … / Non, arriver avant 19h30}}</dd>
+      <dt>Horaires</dt><dd>{{jours et heures ; fermetures}} — susceptibles de changer, vérifiez avant de vous déplacer</dd>
+      <dt>À emporter</dt><dd>{{Oui / Non / Livraison via …}}</dd>
+      <dt>Notre note</dt><dd>{{N,N}}/5 (<a href="/#about">comment nous notons</a>)</dd>
+    </dl>
+
+    <h2 id="visite">Notre visite</h2>
+    <p>{{150-250 mots : contexte, ce que nous avons commandé, pâte, cuisson, produits, service, attente.}}</p>
+
+    <h2 id="commander">Que commander</h2>
+    <p>{{2-3 pizzas avec prix, et pourquoi.}}</p>
+
+    <h2 id="pour-qui">Pour qui</h2>
+    <p>{{Couple, famille, groupe, solo au comptoir, terrasse, végétariens…}}</p>
+
+    <h2 id="pratique">Infos pratiques</h2>
+    <p>{{Accès, quartier, meilleur créneau, conseils d’attente, paiement.}} <a href="https://www.google.com/maps/dir/?api=1&amp;destination={{LAT}},{{LNG}}" rel="noopener noreferrer" target="_blank">Itinéraire (Google Maps, nouvelle fenêtre)</a> · <a href="{{SITE OFFICIEL}}" rel="noopener noreferrer" target="_blank">Site officiel (nouvelle fenêtre)</a></p>
+
+    <h2 id="guides">Ce qu’en disent les guides</h2>
+    <ul>
+      <li>{{Guide}} ({{année}})&#160;: {{distinction}} — <a href="{{URL}}" rel="noopener noreferrer" target="_blank">source</a></li>
+    </ul>
+
+    <h2 id="faq">Questions fréquentes</h2>
+    <h3>{{Question 1 ?}}</h3>
+    <p>{{Réponse.}}</p>
+    <h3>{{Question 2 ?}}</h3>
+    <p>{{Réponse.}}</p>
+
+    <h2 id="voir-aussi">Voir aussi</h2>
+    <ul>
+      <li><a href="/#restaurants">Notre top 5 des pizzerias de Paris</a></li>
+      <li><a href="/palmares-pizzerias-paris.html">Les pizzerias parisiennes distinguées par les guides</a></li>
+    </ul>
+
+    <p><a href="/#resto-{{RANG}}" class="btn">Retour au classement <span aria-hidden="true">&#8594;</span></a></p>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <nav aria-label="Pied de page"><ul class="footer__links">
+        <li><a href="/" class="footer__link">Accueil</a></li>
+        <li><a href="/#restaurants" class="footer__link">Restaurants</a></li>
+        <li><a href="/palmares-pizzerias-paris.html" class="footer__link">Palmarès</a></li>
+        <li><a href="/mentions-legales.html" class="footer__link">Mentions légales</a></li>
+        <li><a href="/confidentialite.html" class="footer__link">Confidentialité</a></li>
+      </ul></nav>
+      <p class="footer__copy">&copy; 2026 Best Pizza Paris</p>
+    </div>
+  </footer>
+
+  <script src="/main.js?v=20261102" defer></script>
+</body>
+</html>
