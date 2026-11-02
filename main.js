@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Best Pizza Paris — script principal (v2026-09-04)
+   Best Pizza Paris — script principal (v2026-11-02)
    - Navigation : état "scrolled", bouton retour en haut
    - Apparition au défilement (.reveal)
    - Menu mobile accessible (aria-expanded, Escape, focus, inert)
@@ -7,6 +7,9 @@
    - Carte Leaflet chargée à la demande (avec repli si le CDN est indisponible)
    Les données des restaurants sont lues dans le HTML (data-* des cartes) :
    une seule source de vérité.
+   La classe .js-ready (posée ici, au démarrage de l'apparition au défilement) signale
+   à la CSS que le masquage des .reveal est pris en charge ; sans elle, styles.css
+   réaffiche tout au bout de 1,5 s (repli si ce fichier ne s'exécute pas).
    ========================================================================== */
 (function () {
   'use strict';
@@ -51,6 +54,7 @@
   } else {
     reveals.forEach(function (el) { el.classList.add('is-visible'); });
   }
+  d.documentElement.classList.add('js-ready');
 
   /* ---------- Menu mobile ---------- */
   var menuBtn = d.querySelector('.nav__menu-btn');
@@ -196,12 +200,14 @@
           name.appendChild(link);
           popup.appendChild(name);
           popup.appendChild(el('div', 'map-popup__addr', r.addr));
-          var rating = el('div', 'map-popup__rating');
-          var star = el('span', 'map-popup__star', '★ ');
-          star.setAttribute('aria-hidden', 'true');
-          rating.appendChild(star);
-          rating.appendChild(d.createTextNode('Note : ' + r.rating + '/5'));
-          popup.appendChild(rating);
+          if (r.rating) {   // les adresses sans note (pages de liste) n'affichent pas la ligne
+            var rating = el('div', 'map-popup__rating');
+            var star = el('span', 'map-popup__star', '★ ');
+            star.setAttribute('aria-hidden', 'true');
+            rating.appendChild(star);
+            rating.appendChild(d.createTextNode('Note : ' + r.rating + '/5'));
+            popup.appendChild(rating);
+          }
           var actions = el('div', 'map-popup__actions');
           if (r.maps) actions.appendChild(extLink(r.maps, 'Itinéraire'));
           if (r.site) actions.appendChild(extLink(r.site, 'Site web'));

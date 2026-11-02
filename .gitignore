@@ -13,3 +13,8 @@ desktop.ini
 *.bak
 *.tmp
 *~
+
+# Photos originales (pleine taille) et fichiers de travail graphiques : hors dépôt
+img/_originaux/
+*.xcf
+*.psd

@@ -1,0 +1,215 @@
+{
+  "_lire_moi": [
+    "Fiche de données unique des pizzerias du classement. Dossier .data/ non servi (bloqué par le .htaccess) mais versionné : ne rien écrire ici qui ne puisse être public.",
+    "Chaque donnée pratique doit porter une date de vérification (verifie_le) et une source : visite, appel téléphonique, site officiel. Tant que verifie_le est null, la donnée n'est pas publiée sur le site.",
+    "Les champs 'distinctions' sont sourcés (URL) ; les champs 'a_verifier' listent ce qui reste à confirmer sur place ou par téléphone.",
+    "Après mise à jour : reporter les changements dans index.html (attributs data-* ET JSON-LD de la carte concernée) puis dans la fiche /pizzeria-<slug>.html si elle existe."
+  ],
+  "derniere_mise_a_jour": "2026-11-02",
+  "restaurants": [
+    {
+      "rang": 1,
+      "slug": "peppe",
+      "nom": "Peppe",
+      "adresse": { "rue": "2 place Saint-Blaise", "code_postal": "75020", "ville": "Paris", "lat": 48.86027, "lng": 2.4037, "verifie_le": "2026-09-17", "source": "site officiel" },
+      "autres_adresses": [
+        { "nom": "Peppe Charonne", "rue": "11 rue Faidherbe", "code_postal": "75011", "verifie_le": null },
+        { "nom": "Casa di Peppe", "rue": "222 rue Saint-Jacques", "code_postal": "75005", "verifie_le": null },
+        { "nom": "Peppe Martyrs", "rue": "61 rue des Martyrs (ou 102 bd de Rochechouart selon les sources)", "code_postal": "75009", "verifie_le": null },
+        { "nom": "Peppe Étienne Marcel", "rue": "11 rue Étienne-Marcel", "code_postal": "75001", "verifie_le": null },
+        { "nom": "Peppe Saint-Charles", "rue": "120 rue Saint-Charles", "code_postal": "75015", "verifie_le": null },
+        { "nom": "Peppe Boulogne", "rue": "104 rue du Point-du-Jour", "code_postal": "92100", "verifie_le": null },
+        { "nom": "Peppe Levallois", "rue": "10 rue Paul-Vaillant-Couturier", "code_postal": "92300", "verifie_le": null },
+        { "nom": "Peppe Lyon", "rue": "5 rue des Marronniers", "code_postal": "69002", "verifie_le": null }
+      ],
+      "site": "https://peppe.pizza/",
+      "instagram": null,
+      "telephone": null,
+      "style": "Pizza napolitaine contemporaine (bords très gonflés)",
+      "pate": "Levain, levée 24 h en deux temps, farine Caputo Nuvola (presse 2020-2023)",
+      "four": null,
+      "pizzaiolo": "Giuseppe Cutraro (Naples), ex-Big Mamma ; co-fondateur Jordan Rosner",
+      "ouverture": "janvier 2020",
+      "pizzas_signatures": [
+        { "nom": "Championne du monde (tomate jaune, San Daniele, provolone, bufala, amandes, confiture de figues)", "prix": null },
+        { "nom": "Provola e Pepe (championne Pizza DOC 2025)", "prix": null },
+        { "nom": "Margherita", "prix": null }
+      ],
+      "prix": { "margherita": null, "fourchette_pizzas": null, "releve_le": null, "indication_presse": "12 à 21 € (Le Fooding, Lesrestos, non datés)" },
+      "horaires": { "texte": null, "verifie_le": null, "indication_presse": "7j/7 midi et soir selon PagesJaunes ; fermé le lundi selon une source ancienne" },
+      "reservation": { "possible": null, "canal": null, "verifie_le": null, "indication_presse": "conseillée" },
+      "a_emporter": null,
+      "livraison": null,
+      "terrasse": "petite terrasse face à l'église Saint-Germain-de-Charonne (presse)",
+      "vegetarien": "Margherita, Marinara, Vegetariana ; une pizza vegan",
+      "sans_gluten": null,
+      "metro": [ { "station": "Porte de Bagnolet", "lignes": ["3", "T3b"] }, { "station": "Gambetta", "lignes": ["3", "3bis"] } ],
+      "distinctions": [
+        { "annee": 2019, "texte": "Champion du monde de pizza contemporaine (Trofeo Caputo)", "source": "https://www.scattidigusto.it/2019/09/19/pizza-contemporanea-peppe-cutraro-e-campione-del-mondo/" },
+        { "annee": 2021, "texte": "Meilleure pizzeria d'Europe, 50 Top Pizza Europe", "source": "https://www.50toppizza.it/?p=42281" },
+        { "annee": 2022, "texte": "Meilleure pizzeria d'Europe (50 Top Pizza Europe) et 3e mondiale (50 Top Pizza World)", "source": "https://50toppizza.it/50-top-pizza-europe-2022-peppe-pizzeria-in-paris-has-been-named-the-best-pizzeria-in-europe" },
+        { "annee": 2025, "texte": "Champion du monde Pizza DOC, catégorie Pizza Classica (Provola e Pepe)", "source": "https://wetheitalians.com/news/giuseppe-cutraro-wins-11th-pizza-doc-world-championship" },
+        { "annee": 2026, "texte": "Cité dans le top des meilleures pizzas de Paris de Yonder (juillet 2026)", "source": "https://www.yonder.fr/les-tops/restaurants/les-meilleures-pizzas-de-paris" }
+      ],
+      "a_verifier": [
+        "Horaires réels de Saint-Blaise (lundi ? service continu le week-end ?)",
+        "Canal de réservation (site, Zenchef, TheFork) et téléphone propre à Saint-Blaise",
+        "Présence sur Uber Eats / Deliveroo",
+        "Type de four et nombre de couverts",
+        "Prix actuels Margherita / Championne du monde / Provola e Pepe",
+        "Compte Instagram officiel (@peppe.pizza ou @peppeofficiel)",
+        "Liste officielle des adresses du groupe"
+      ]
+    },
+    {
+      "rang": 2,
+      "slug": "mangioni",
+      "nom": "Mangioni",
+      "adresse": { "rue": "23 rue Saint-Vincent-de-Paul", "code_postal": "75010", "ville": "Paris", "lat": 48.88157, "lng": 2.35255, "verifie_le": "2026-09-17", "source": "site officiel" },
+      "autres_adresses": [],
+      "site": "https://ristorantemangioni.com/",
+      "instagram": null,
+      "telephone": null,
+      "style": "Pizza napolitaine",
+      "pate": null,
+      "four": null,
+      "pizzaiolo": null,
+      "ouverture": null,
+      "pizzas_signatures": [ { "nom": "Diavola", "prix": null } ],
+      "autres_plats": "Pâtes « Black and White » (encre de seiche, crème), raviolis tomate-ricotta, polpette d'aubergine ; vins italiens, bières artisanales, cocktails",
+      "prix": { "margherita": null, "fourchette_pizzas": null, "releve_le": null, "indication_presse": "prix moyen 18 à 30 € ; formule déjeuner 16 € selon des avis clients" },
+      "horaires": { "texte": null, "verifie_le": null, "indication_presse": "lundi-vendredi midi et soir, fermé le week-end selon un annuaire non daté : à confirmer en priorité" },
+      "reservation": { "possible": null, "canal": null, "verifie_le": null, "indication_presse": "fiche TheFork existante" },
+      "a_emporter": null,
+      "livraison": null,
+      "terrasse": null,
+      "vegetarien": null,
+      "sans_gluten": null,
+      "metro": [ { "station": "Gare du Nord", "lignes": ["4", "5", "RER B", "RER D", "RER E"] }, { "station": "Poissonnière", "lignes": ["7"] } ],
+      "distinctions": [],
+      "a_verifier": [
+        "Existence et jours d'ouverture (appel téléphonique avant toute visite)",
+        "Nom du pizzaiolo et des fondateurs, date d'ouverture (2019, 2023 ou 2024 selon les sources)",
+        "Réservation (TheFork ?), livraison, à emporter",
+        "Type de four, prix des pizzas, terrasse, nombre de couverts",
+        "Compte Instagram, téléphone"
+      ]
+    },
+    {
+      "rang": 3,
+      "slug": "oobatz",
+      "nom": "Oobatz",
+      "adresse": { "rue": "4 bis avenue Jean-Aicard", "code_postal": "75011", "ville": "Paris", "lat": 48.86474, "lng": 2.38187, "verifie_le": "2026-09-17", "source": "site officiel" },
+      "autres_adresses": [],
+      "site": "https://www.oobatz.fr/",
+      "instagram": "@o.o.b.a.t.z (à confirmer)",
+      "telephone": "+33 9 87 41 68 53 (presse 2024, à confirmer)",
+      "style": "Pâte fine et croustillante au levain, entre New York et Rome",
+      "pate": "Levain naturel, six farines, fermentation 36 h ; cuisson 1 min 30 à 400 °C (presse 2024-2026)",
+      "four": null,
+      "pizzaiolo": "Dan Pearson (Maine, États-Unis), ex-Circus Bakery et Ten Belles Bread ; associés Robert Compagnon et Jessica Yang",
+      "ouverture": "mai 2024",
+      "pizzas_signatures": [
+        { "nom": "Pizza aux polpette (caciocavallo, tomate, oignon)", "prix": "24 € (presse 2024-2025)" },
+        { "nom": "Carte blanche du chef", "prix": "16 € (presse 2024-2025)" },
+        { "nom": "Margherita", "prix": null }
+      ],
+      "prix": { "margherita": null, "fourchette_pizzas": null, "releve_le": null, "indication_presse": "16 à 24 € (Le Fooding, Sortir à Paris) ; desserts 6 à 14 €" },
+      "horaires": { "texte": null, "verifie_le": null, "indication_presse": "dîner uniquement ; lundi-vendredi 18h-22h depuis mars 2026 selon Paris by Mouth (mercredi-dimanche auparavant) : à confirmer" },
+      "reservation": { "possible": true, "canal": "en ligne (Umai), ouverture deux semaines à l'avance ; places sans réservation au comptoir et à la table commune", "verifie_le": null, "source": "https://restaurants.umai.io/restaurants/oobatz" },
+      "a_emporter": null,
+      "livraison": null,
+      "terrasse": null,
+      "vegetarien": "environ la moitié de la carte",
+      "sans_gluten": null,
+      "metro": [ { "station": "Ménilmontant", "lignes": ["2"] }, { "station": "Rue Saint-Maur", "lignes": ["3"] }, { "station": "Père Lachaise", "lignes": ["2", "3"] } ],
+      "distinctions": [
+        { "annee": 2025, "texte": "Meilleure pizza, Time Out Paris Food & Drink Awards", "source": "https://www.timeout.fr/paris/actualites/le-palmares-des-time-out-paris-food-drink-awards-2025-042925" },
+        { "annee": 2025, "texte": "29e du 50 Top Pizza Europe (première adresse parisienne)", "source": "https://www.timeout.fr/paris/actualites/trois-pizzerias-parisiennes-parmi-les-meilleures-deurope-060525" },
+        { "annee": 2026, "texte": "14e des meilleures pizzas du monde selon Time Out (février 2026)", "source": "https://www.timeout.fr/paris/actualites/une-pizza-parisienne-dans-le-top-15-des-meilleures-au-monde-selon-time-out-020826" },
+        { "annee": 2026, "texte": "23e du 50 Top Pizza Europe (+6 places)", "source": "https://www.timeout.fr/paris/actualites/paris-brille-au-classement-des-meilleures-pizzas-europeennes-070626" }
+      ],
+      "a_verifier": [
+        "Horaires en vigueur (lundi-vendredi ou mercredi-dimanche)",
+        "Type de four, à emporter, terrasse",
+        "Prix actuels, compte Instagram, téléphone"
+      ]
+    },
+    {
+      "rang": 4,
+      "slug": "dalmata",
+      "nom": "Dalmata",
+      "adresse": { "rue": "21 rue de Charonne", "code_postal": "75011", "ville": "Paris", "lat": 48.85321, "lng": 2.37487, "verifie_le": "2026-09-17", "source": "site officiel" },
+      "autres_adresses": [
+        { "nom": "Dalmata Tiquetonne (adresse historique, 2018)", "rue": "8 rue Tiquetonne", "code_postal": "75002", "verifie_le": null, "statut": "à confirmer : signalée temporairement fermée début 2026 par un avis, fiche active en juin 2026 ailleurs" }
+      ],
+      "site": "https://www.gruppodalmata.com/",
+      "instagram": "@dalmatapizza (à confirmer)",
+      "telephone": null,
+      "style": "Pizza napolitaine classique",
+      "pate": null,
+      "four": "four à bois venu de Naples (Tiquetonne, presse 2018) ; Charonne à confirmer",
+      "pizzaiolo": "Roberto Belotti (Lombardie) ; fondateurs Julien Bouaziz et Romain Bertin",
+      "ouverture": "janvier 2018 (Tiquetonne) ; Charonne ouvert en 2021 sous le nom Giorgio",
+      "pizzas_signatures": [ { "nom": "Margherita", "prix": null }, { "nom": "Regina", "prix": null }, { "nom": "Marinara", "prix": null } ],
+      "prix": { "margherita": null, "fourchette_pizzas": null, "releve_le": null, "indication_presse": "8 à 18 € (Le Fooding, ancien) ; 20 à 30 € par personne (agrégateur)" },
+      "horaires": { "texte": null, "verifie_le": null, "indication_presse": "Charonne : tous les jours midi et soir selon un annuaire non daté" },
+      "reservation": { "possible": null, "canal": null, "verifie_le": null, "indication_presse": "fortement recommandée (Charonne) ; sans réservation à Tiquetonne selon un guide ancien" },
+      "a_emporter": "click & collect signalé (Gault&Millau 2026)",
+      "livraison": "signalée (Gault&Millau 2026 ; Deliveroo à Tiquetonne selon un agrégateur)",
+      "terrasse": "signalée (Gault&Millau 2026)",
+      "vegetarien": null,
+      "sans_gluten": null,
+      "metro": [ { "station": "Ledru-Rollin", "lignes": ["8"] }, { "station": "Bastille", "lignes": ["1", "5", "8"] }, { "station": "Charonne", "lignes": ["9"] } ],
+      "distinctions": [
+        { "annee": 2020, "texte": "27e du 50 Top Pizza Europe", "source": "https://50toppizza.it/recensione/dalmata" },
+        { "annee": 2023, "texte": "44e du 50 Top Pizza Europe", "source": "https://foodle.pro/restaurants/paris/dalmata-pizza" },
+        { "annee": 2024, "texte": "40e du 50 Top Pizza Europe", "source": "https://foodle.pro/restaurants/paris/dalmata-pizza" },
+        { "annee": 2026, "texte": "Sélectionné par Gault&Millau", "source": "https://fr.gaultmillau.com/fr/restaurants/dalmata" }
+      ],
+      "a_verifier": [
+        "Statut de l'adresse Tiquetonne (ouverte, fermée, déplacée) : appel téléphonique",
+        "Quelle adresse est l'adresse principale à afficher",
+        "Horaires et canal de réservation de Charonne ; type de four",
+        "Prix actuels, livraison par adresse, compte Instagram, téléphone"
+      ]
+    },
+    {
+      "rang": 5,
+      "slug": "guillaume-grasso",
+      "nom": "Guillaume Grasso",
+      "adresse": { "rue": "45 rue Brancion", "code_postal": "75015", "ville": "Paris", "lat": 48.83359, "lng": 2.30436, "verifie_le": "2026-09-17", "source": "site officiel" },
+      "autres_adresses": [],
+      "site": "https://www.guillaume-grasso.com/",
+      "instagram": "@guillaumegrasso (à confirmer)",
+      "telephone": "01 45 33 83 83 (annuaire, à confirmer)",
+      "style": "Vera pizza napoletana (certification AVPN)",
+      "pate": null,
+      "four": "four à bois",
+      "pizzaiolo": "Guillaume Grasso, troisième génération ; famille de la Pizzeria Gorizia 1916 (Vomero, Naples)",
+      "ouverture": "printemps 2018",
+      "pizzas_signatures": [ { "nom": "Cosacca (tomate, pecorino romano, basilic, huile d'olive)", "prix": null }, { "nom": "Margherita", "prix": null } ],
+      "prix": { "margherita": null, "fourchette_pizzas": null, "releve_le": null, "indication_presse": "à partir de 8 € (Yonder, juillet 2026) ; carte 15 à 35 € (annuaire)" },
+      "horaires": { "texte": null, "verifie_le": null, "indication_presse": "lundi soir ; mardi-samedi midi et soir ; fermé le dimanche (annuaires, à confirmer)" },
+      "reservation": { "possible": null, "canal": null, "verifie_le": null, "indication_presse": "obligatoire ou vivement conseillée selon les sources" },
+      "a_emporter": null,
+      "livraison": null,
+      "terrasse": null,
+      "vegetarien": "oui",
+      "sans_gluten": null,
+      "metro": [ { "station": "Plaisance", "lignes": ["13"] }, { "station": "Porte de Vanves", "lignes": ["13", "T3a"] }, { "station": "Convention", "lignes": ["12"] } ],
+      "distinctions": [
+        { "annee": 2023, "texte": "21e du 50 Top Pizza Europe, première adresse parisienne", "source": "https://sortiraparis.com/en/where-to-eat-in-paris/food-events/articles/292952-3-pizzerias-in-paris-in-the-ranking-of-the-50-best-pizzerias-in-europe-2023" },
+        { "annee": 2026, "texte": "N° 1 des meilleures pizzas de Paris selon Yonder (7 juillet 2026)", "source": "https://www.yonder.fr/les-tops/restaurants/les-meilleures-pizzas-de-paris" },
+        { "annee": null, "texte": "Recommandé par Time Out Paris", "source": "https://www.timeout.fr/paris/restaurants/guillaume-grasso-vera-pizza-napoletana" },
+        { "annee": null, "texte": "Pizzeria certifiée AVPN (Associazione Verace Pizza Napoletana)", "source": "https://www.pizzanapoletana.org/" }
+      ],
+      "a_verifier": [
+        "Prix Margherita / Cosacca / Marinara",
+        "Plateforme de réservation, à emporter, livraison, terrasse, sans gluten",
+        "Statut AVPN actuel (numéro de membre), classement 50 Top Pizza 2025-2026",
+        "Adresse du bar à vin Il Wine Bar voisin"
+      ]
+    }
+  ]
+}
